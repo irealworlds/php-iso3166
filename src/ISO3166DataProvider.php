@@ -20,9 +20,9 @@ interface ISO3166DataProvider
      *
      * @throws \League\ISO3166\Exception\OutOfBoundsException if input does not exist in dataset
      *
-     * @return array<string, mixed>
+     * @return Country
      */
-    public function name(string $name): array;
+    public function name(string $name): Country;
 
     /**
      * Lookup ISO3166-1 data by alpha2 identifier.
@@ -32,9 +32,9 @@ interface ISO3166DataProvider
      * @throws \League\ISO3166\Exception\DomainException if input does not look like an alpha2 key
      * @throws \League\ISO3166\Exception\OutOfBoundsException if input does not exist in dataset
      *
-     * @return array<string, mixed>
+     * @return Country
      */
-    public function alpha2(string $alpha2): array;
+    public function alpha2(string $alpha2): Country;
 
     /**
      * Lookup ISO3166-1 data by alpha3 identifier.
@@ -44,9 +44,9 @@ interface ISO3166DataProvider
      * @throws \League\ISO3166\Exception\DomainException if input does not look like an alpha3 key
      * @throws \League\ISO3166\Exception\OutOfBoundsException if input does not exist in dataset
      *
-     * @return array<string, mixed>
+     * @return Country
      */
-    public function alpha3(string $alpha3): array;
+    public function alpha3(string $alpha3): Country;
 
     /**
      * Lookup ISO3166-1 data by numeric identifier (numerical string, that is).
@@ -56,7 +56,7 @@ interface ISO3166DataProvider
      * @throws \League\ISO3166\Exception\DomainException if input does not look like a numeric key
      * @throws \League\ISO3166\Exception\OutOfBoundsException if input does not exist in dataset
      *
-     * @return array<string, mixed>
+     * @return Country
      */
-    public function numeric(string $numeric): array;
+    public function numeric(string $numeric): Country;
 }

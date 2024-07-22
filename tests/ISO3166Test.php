@@ -17,29 +17,25 @@ use PHPUnit\Framework\TestCase;
 
 class ISO3166Test extends TestCase
 {
-    /** @var array<string, string> */
-    public $foo = [
-        ISO3166::KEY_ALPHA2 => 'FO',
-        ISO3166::KEY_ALPHA3 => 'FOO',
-        ISO3166::KEY_NUMERIC => '001',
-        ISO3166::KEY_NAME => 'FOO',
-    ];
-
-    /** @var array<string, string> */
-    public $bar = [
-        ISO3166::KEY_ALPHA2 => 'BA',
-        ISO3166::KEY_ALPHA3 => 'BAR',
-        ISO3166::KEY_NUMERIC => '002',
-        ISO3166::KEY_NAME => 'BAR',
-    ];
-
-    /** @var ISO3166 */
-    public $iso3166;
+    public readonly Country $foo;
+    public readonly Country $bar;
+    public readonly ISO3166$iso3166;
 
     protected function setUp(): void
     {
-        $validator = new ISO3166DataValidator();
-        $this->iso3166 = new ISO3166($validator->validate([$this->foo, $this->bar]));
+        $this->foo = new Country(
+            name: "FOO",
+            alpha2: "FO",
+            alpha3: "FOO",
+            numeric: "001"
+        );
+        $this->bar = new Country(
+            name: "BAR",
+            alpha2: "BA",
+            alpha3: "BAR",
+            numeric: "002"
+        );
+        $this->iso3166 = new ISO3166(([$this->foo, $this->bar]));
     }
 
     /**
@@ -77,8 +73,8 @@ class ISO3166Test extends TestCase
      */
     public function testGetByAlpha2(): void
     {
-        static::assertEquals($this->foo, $this->iso3166->alpha2($this->foo[ISO3166::KEY_ALPHA2]));
-        static::assertEquals($this->bar, $this->iso3166->alpha2($this->bar[ISO3166::KEY_ALPHA2]));
+        static::assertEquals($this->foo, $this->iso3166->alpha2($this->foo->alpha2));
+        static::assertEquals($this->bar, $this->iso3166->alpha2($this->bar->alpha2));
     }
 
     /**
@@ -116,8 +112,8 @@ class ISO3166Test extends TestCase
      */
     public function testGetByAlpha3(): void
     {
-        static::assertEquals($this->foo, $this->iso3166->alpha3($this->foo[ISO3166::KEY_ALPHA3]));
-        static::assertEquals($this->bar, $this->iso3166->alpha3($this->bar[ISO3166::KEY_ALPHA3]));
+        static::assertEquals($this->foo, $this->iso3166->alpha3($this->foo->alpha3));
+        static::assertEquals($this->bar, $this->iso3166->alpha3($this->bar->alpha3));
     }
 
     /**
@@ -158,8 +154,8 @@ class ISO3166Test extends TestCase
      */
     public function testGetByNumeric(): void
     {
-        static::assertEquals($this->foo, $this->iso3166->numeric($this->foo[ISO3166::KEY_NUMERIC]));
-        static::assertEquals($this->bar, $this->iso3166->numeric($this->bar[ISO3166::KEY_NUMERIC]));
+        static::assertEquals($this->foo, $this->iso3166->numeric($this->foo->numeric));
+        static::assertEquals($this->bar, $this->iso3166->numeric($this->bar->numeric));
     }
 
     /**
@@ -194,8 +190,8 @@ class ISO3166Test extends TestCase
      */
     public function testGetByName(): void
     {
-        static::assertEquals($this->foo, $this->iso3166->name($this->foo[ISO3166::KEY_NAME]));
-        static::assertEquals($this->bar, $this->iso3166->name($this->bar[ISO3166::KEY_NAME]));
+        static::assertEquals($this->foo, $this->iso3166->name($this->foo->name));
+        static::assertEquals($this->bar, $this->iso3166->name($this->bar->name));
     }
 
     /**
@@ -231,8 +227,8 @@ class ISO3166Test extends TestCase
      */
     public function testGetByExactName(): void
     {
-        static::assertEquals($this->foo, $this->iso3166->exactName($this->foo[ISO3166::KEY_NAME]));
-        static::assertEquals($this->bar, $this->iso3166->exactName($this->bar[ISO3166::KEY_NAME]));
+        static::assertEquals($this->foo, $this->iso3166->exactName($this->foo->name));
+        static::assertEquals($this->bar, $this->iso3166->exactName($this->bar->name));
     }
 
     /**
@@ -287,6 +283,6 @@ class ISO3166Test extends TestCase
     {
         $country = (new ISO3166())->name('CÔTE D\'IVOIRE');
 
-        static::assertEquals('CIV', $country['alpha3']);
+        static::assertEquals('CIV', $country->alpha3);
     }
 }
